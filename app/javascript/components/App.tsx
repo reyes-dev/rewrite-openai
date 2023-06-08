@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 
 function App() {
-    const [count, setCount] = useState(0);
+    const submitForm = (e) => {
+            e.preventDefault();
+            console.log('test');
+        }
 
     return(
     <div>
         <h1>ChatGPT - Rewrite</h1>
-        <p>You clicked {count} times</p>
-        <button onClick={() => setCount(count + 1)}>Click me!</button>
+       
+       <form onSubmit={submitForm}>
+        <textarea />
+        <button type="submit">Rewrite</button>
+        <p>In the style of...</p>
+        <input type="text"/>
+       </form>
     </div>
     );
 }
