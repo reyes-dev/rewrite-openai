@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 function App() {
     const [prompt, setPrompt] = useState('');
     const [author, setAuthor] = useState('');
+    const [rewrite, setRewrite] = useState('');
 
     const onChange = (event, setFunction) => {
         setFunction(event.target.value);
         };
 
-    const submitForm = async (e) => {
+    const postMessage = async (e) => {
             e.preventDefault();
             const body = {
                author,
@@ -31,6 +32,29 @@ function App() {
                     }).catch((error) => { console.log(error.message); });
         };
 
+   const getMessage = async (e) => {
+            e.preventDefault(); 
+
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+            await fetch(`/messages/latest`, {
+                    method: 'GET',
+                    headers: {
+                            'X-CSRF-Token': token,
+                            'Content-Type': 'application/json',
+                        }
+                }).then((response) => {
+                    if(response.ok) {
+                            response.json().then((message) => setRewrite(message.received_body) )
+                        }
+                        throw new Error('Network response was not OK.')
+                    }).catch((error) => { console.log(error.message); });
+        };
+      
+      const submitForm = async (e) => {
+            await postMessage(e);
+            await getMessage(e);
+          }
+
     return(
     <div>
         <h1>ChatGPT - Rewrite</h1>
@@ -40,6 +64,7 @@ function App() {
         <button type="submit">Rewrite</button>
         <p>In the style of...</p>
         <input type="text" value={author} onChange={(e) => onChange(e, setAuthor)} required />
+        <p>{rewrite}</p>
        </form>
     </div>
     );
