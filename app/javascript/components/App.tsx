@@ -1,9 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
     const [prompt, setPrompt] = useState('');
     const [author, setAuthor] = useState('');
     const [rewrite, setRewrite] = useState('');
+   
+    useEffect(() => {
+           fetchBookDataAuthor();
+           fetchRandomQuote();
+        }, [])
+    const fetchRandomQuote = async () => {
+        try {
+                const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
+                        method: 'GET',
+                        headers: { 'X-Api-Key': '/USAQLzEraFRbMw7Fgy3Gg==YCEr07NGKSxvHwO6'},
+                        contentType: 'application/json',
+                    });
+                const data = await response.json();
+                setPrompt(data[0].quote);
+                return;
+
+        } catch(error) {
+                console.log(error);
+                return;
+            }
+        }
+    const fetchBookDataAuthor = async () => {
+            try {
+                    const offset = Math.floor(Math.random() * 10001);
+                    const randomAuthorNumber = Math.floor(Math.random() * 12);
+                    const response = await fetch(`https://openlibrary.org/subjects/literature.json?offset=${offset}`);
+                    const data = await response.json();
+                    const randomAuthorName = data.works[randomAuthorNumber].authors[0].name;
+                    setAuthor(randomAuthorName);
+                } catch(error) {
+                    console.log(error);
+                    return;
+            }
+        }
 
     const onChange = (event, setFunction) => {
         setFunction(event.target.value);
