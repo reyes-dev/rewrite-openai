@@ -74,13 +74,14 @@ function App() {
         event.preventDefault();
 
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
-        await fetch(`/messages/latest`, {
+        const params = {
             method: 'GET',
             headers: {
                 'X-CSRF-Token': token,
                 'Content-Type': 'application/json',
             }
-        }).then((response) => {
+        };
+        await fetch(`/messages/latest`, params).then((response) => {
             if (response.ok) {
                 response.json().then((message) => setRewrite(message.received_body))
             }
