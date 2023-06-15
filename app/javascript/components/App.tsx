@@ -8,7 +8,8 @@ function App() {
     useEffect(() => {
         fetchBookDataAuthor();
         fetchRandomQuote();
-    }, [])
+    }, []);
+
     const fetchRandomQuote = async () => {
         try {
             let params: Object = {
@@ -20,12 +21,12 @@ function App() {
             const data = await response.json();
             setPrompt(data[0].quote);
             return;
-
         } catch (error) {
             console.log(error);
             return;
         }
-    }
+    };
+
     const fetchBookDataAuthor = async () => {
         try {
             const offset = Math.floor(Math.random() * 10001);
@@ -38,19 +39,19 @@ function App() {
             console.log(error);
             return;
         }
-    }
+    };
 
-    const onChange = (event:Event, setFunction:Function) => {
+    const onChange = (event:Event, setFunction:Function):any => {
         setFunction((event.target as HTMLTextAreaElement).value);
     };
 
     const postMessage = async (event:Event) => {
         event.preventDefault();
+        
         const body = {
             author,
             sent_body: prompt
         };
-
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
         const headers_params:Object = {
                 'X-CSRF-Token': token,
@@ -90,7 +91,7 @@ function App() {
     const submitForm = async (event:Event) => {
         await postMessage(event);
         await getMessage(event);
-    }
+    };
 
     return (
         <div className='flex flex-col w-full gap-8'>
@@ -110,6 +111,6 @@ function App() {
             </div>
         </div>
     );
-}
+};
 
 export default App;
