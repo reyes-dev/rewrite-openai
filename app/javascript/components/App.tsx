@@ -87,9 +87,9 @@ function App() {
         }).catch((error) => { console.log(error.message); });
     };
 
-    const submitForm = async (e:Event) => {
-        await postMessage(e);
-        await getMessage(e);
+    const submitForm = async (event:Event) => {
+        await postMessage(event);
+        await getMessage(event);
     }
 
     return (
@@ -98,10 +98,10 @@ function App() {
             <div className='flex h-1/2 gap-16 justify-center'>
                 <div className='w-96 p-8 shadow-lg bg-white'> 
                     <form onSubmit={submitForm} className='flex flex-col gap-2'>
-                        <textarea value={prompt} onChange={(e) => onChange(e, setPrompt)} rows="10" cols="80" className="" required /> 
+                        <textarea value={prompt} onChange={(event) => onChange(event, setPrompt)} rows="10" cols="80" className="" required /> 
                         <button className='border-2 hover:bg-gray-100 active:bg-gray-200' type="submit">Rewrite</button> 
                         <p>In the style of...</p>
-                        <input className="self-center border-2" type="text" value={author} onChange={(e) => onChange(e, setAuthor)} required />
+                        <input className="self-center border-2" type="text" value={author} onChange={(event) => onChange(event, setAuthor)} required />
                     </form>
                 </div>
                 <div className='w-96 p-8 shadow-lg bg-white'>
