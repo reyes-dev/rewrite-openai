@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MetaHTMLAttributes } from 'react';
 
 function App() {
     const [prompt, setPrompt] = useState('');
@@ -51,15 +51,17 @@ function App() {
             sent_body: prompt
         };
 
-        const token = document.querySelector('meta[name="csrf-token"]').content;
-        await fetch(`/messages`, {
-            method: 'POST',
-            headers: {
+        const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
+        const headers_params:Object = {
                 'X-CSRF-Token': token,
                 'Content-Type': 'application/json',
-            },
+            };
+        const params:Object = {
+            method: 'POST',
+            headers: headers_params,
             body: JSON.stringify(body),
-        }).then((response) => {
+            };
+        await fetch(`/messages`, params).then((response) => {
             if (response.ok) {
                 return response.json();
             }
