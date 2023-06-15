@@ -11,11 +11,12 @@ function App() {
     }, [])
     const fetchRandomQuote = async () => {
         try {
-            const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
+            let params: Object = {
                 method: 'GET',
                 headers: { 'X-Api-Key': '/USAQLzEraFRbMw7Fgy3Gg==YCEr07NGKSxvHwO6' },
                 contentType: 'application/json',
-            });
+            }
+            const response = await fetch('https://api.api-ninjas.com/v1/quotes', params);
             const data = await response.json();
             setPrompt(data[0].quote);
             return;
