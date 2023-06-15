@@ -43,8 +43,8 @@ function App() {
         setFunction((event.target as HTMLTextAreaElement).value);
     };
 
-    const postMessage = async (e) => {
-        e.preventDefault();
+    const postMessage = async (event:Event) => {
+        event.preventDefault();
         const body = {
             author,
             sent_body: prompt
