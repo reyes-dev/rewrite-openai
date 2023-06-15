@@ -84,7 +84,7 @@ function App() {
         }).catch((error) => { console.log(error.message); });
     };
 
-    const submitForm = async (e) => {
+    const submitForm = async (e:Event) => {
         await postMessage(e);
         await getMessage(e);
     }
