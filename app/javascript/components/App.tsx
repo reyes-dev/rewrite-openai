@@ -39,8 +39,8 @@ function App() {
         }
     }
 
-    const onChange = (event, setFunction) => {
-        setFunction(event.target.value);
+    const onChange = (event:Event, setFunction:Function) => {
+        setFunction((event.target as HTMLTextAreaElement).value);
     };
 
     const postMessage = async (e) => {
@@ -66,7 +66,7 @@ function App() {
         }).catch((error) => { console.log(error.message); });
     };
 
-    const getMessage = async (e) => {
+    const getMessage = async (e:Event) => {
         e.preventDefault();
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
