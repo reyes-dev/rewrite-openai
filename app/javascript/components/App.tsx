@@ -69,10 +69,10 @@ function App() {
         }).catch((error) => { console.log(error.message); });
     };
 
-    const getMessage = async (e:Event) => {
-        e.preventDefault();
+    const getMessage = async (event:Event) => {
+        event.preventDefault();
 
-        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
         await fetch(`/messages/latest`, {
             method: 'GET',
             headers: {
